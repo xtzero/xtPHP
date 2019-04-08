@@ -46,6 +46,7 @@ class db{
         }
     }
 
+    public function trans($sqlArr,$success = false,$failed = false){
         $this->startTrans();
         $resArr = [];
         foreach($sqlArr as $k => $v){
