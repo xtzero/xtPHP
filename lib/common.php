@@ -1,6 +1,4 @@
 <?php
-date_default_timezone_set('PRC');
-
 /**
  * 跨域访问开启
  */
@@ -28,21 +26,6 @@ function ajax($code,$msg,$data = []){
 function error($info){
     throw new Exception('<h1>'.$info.'</h1><br/><p>'.$_SERVER['PHP_SELF'].' <p><hr/>');
     die();
-}
-
-/**
- * 实例化类，运行程序
- */
-function runApp(){
-    $a = strrpos($_SERVER['PHP_SELF'],'/')+1;
-    $b = strrpos($_SERVER['PHP_SELF'],'.')+1;
-    $className = substr($_SERVER['PHP_SELF'],$a,$b-$a-1);
-    try{
-        $c = new $className;
-        $c->run();
-    }catch(Exception $e){
-        displayException($e);
-    }
 }
 
 /**

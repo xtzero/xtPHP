@@ -54,10 +54,12 @@ class db{
             if(!$tempRes){
                 $this->rollback();
                 if(isset($failed) && $failed){
-                    return $failed([
-                        'sql' => $v,
-                        'res' => $tempRes,
-                        'mysqlError' => mysqli_error($this->db)
+                    return call_user_func_array($failed, [
+                        [
+                            'sql' => $v,
+                            'res' => $tempRes,
+                            'mysqlError' => mysqli_error($this->db)
+                        ]
                     ]);
                 }
                 
@@ -67,7 +69,7 @@ class db{
 
         $this->commit();
         if(isset($success) && $success){
-            return $success();
+            return call_user_func($success);
         }
         
         return true;
@@ -121,10 +123,4 @@ function fetchDbResult($dbResult){
     }
 
     return $data;
-}
-
-function __destruct(){
-    if($this->db){
-        mysqli_close($this->db);
-    }
 }
