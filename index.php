@@ -1,10 +1,9 @@
 <?php
+//错误提示
+error_reporting(E_ALL);
 
 //配置时区
 date_default_timezone_set('PRC');
-
-//错误提示
-error_reporting(E_ALL);
 
 //载入其他文件
 require_once 'lib/fullload.php';

@@ -1,16 +1,26 @@
 <?php
+namespace lib;
 class db{
-    private $db_host;                                           //数据库域名
-    private $db_usr     =           'root';                     //数据库用户名
-    private $db_pwd     =           '';                         //数据库密码
-    private $db;                                                //当前数据库链接
-    private static $obj =           null;                       //属性值为对象,默认为null
+    private $db_host;
+    private $db_usr;
+    private $db_pwd;
+
+    private $dbConfFile = '/var/xtDbConf/mysql';
+    private $db;
+    private static $obj = null;
 
     private function  __construct(){
-        $this->db_host = '';
+        if(file_exists($this->dbConfFile)) {
+            $dbconf = json_decode(file_get_contents($this->dbConfFile), true);
+            $this->db_host = $dbconf['dbHost'];
+            $this->db_pwd = $dbconf['dbPwd'];
+            $this->db_usr = $dbconf['dbUsr'];
+        } else {
+            error("数据库连接失败！请创建文件：{$this->dbConfFile}，并写入内容：".'{"dbUsr":"","dbHost":"","dbPwd":""}');
+        }
         $db = mysqli_connect($this->db_host,$this->db_usr,$this->db_pwd);
         if($db){
-            mysqli_select_db($db,'');
+            mysqli_select_db($db,'pet');
             mysqli_query($db,'set names \'utf8\'');
             $this->db = $db;
 
@@ -62,7 +72,7 @@ class db{
                         ]
                     ]);
                 }
-                
+
                 return false;
             }
         }
@@ -71,7 +81,7 @@ class db{
         if(isset($success) && $success){
             return call_user_func($success);
         }
-        
+
         return true;
     }
 

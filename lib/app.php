@@ -3,7 +3,13 @@
 /**
  * 分析路径，启动程序
  */
-$uri = substr($_SERVER['REQUEST_URI'], 0, 1) == '/' ? substr($_SERVER['REQUEST_URI'], 1) : $_SERVER['REQUEST_URI'];
+
+if (!isset($_SERVER['PATH_INFO'])) {
+    $uri = 'index';
+} else {
+    $uri = substr($_SERVER['PATH_INFO'], 0, 1) == '/' ? substr($_SERVER['PATH_INFO'], 1) : $_SERVER['PATH_INFO'];
+}
+
 if ($router[$uri]) {
     $routerPath = $router[$uri];
 } else {

@@ -4,5 +4,5 @@
  */
 return [
     'index' => 'index/index/index',
-    'index2' => '/index2/index2/index2',
+    'signin' => 'app/account/signin',
 ];

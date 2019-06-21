@@ -10,17 +10,18 @@ class coreController
     /**
      * 参数验证方法
      * @param $paramStr
-     * @param $method
-     *
-     * par1
-     * *par1
-     * *par1=123
-     * par1>>int
-     * *par1=123>>int
-     *      ֧int、string、float、array
+     * @param string $method
+     * @return int
+     * @throws \Exception
      */
     public function param($paramStr, $method = 'g')
     {
+        #par1
+        #par1
+        #par1=123
+        #par1>>int
+        #par1=123>>int
+        #int、string、float、array
         $paramArr = explode(',', $paramStr);
         $needButNone = array();
         $successCount = 0;
