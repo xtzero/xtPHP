@@ -56,65 +56,6 @@ class db{
         }
     }
 
-    public function trans($sqlArr,$success = false,$failed = false){
-        $this->startTrans();
-        $resArr = [];
-        foreach($sqlArr as $k => $v){
-            $tempRes = mysqli_query($this->db,$v);
-            if(!$tempRes){
-                $this->rollback();
-                if(isset($failed) && $failed){
-                    return call_user_func_array($failed, [
-                        [
-                            'sql' => $v,
-                            'res' => $tempRes,
-                            'mysqlError' => mysqli_error($this->db)
-                        ]
-                    ]);
-                }
-
-                return false;
-            }
-        }
-
-        $this->commit();
-        if(isset($success) && $success){
-            return call_user_func($success);
-        }
-
-        return true;
-    }
-
-    public function startTrans(){
-        if($this->db){
-            $res = mysqli_query($this->db,'START TRANSACTION');
-            return $res;
-        }else{
-            error('db instance not found!');
-            die();
-        }
-    }
-
-    public function commit(){
-        if($this->db){
-            $res = mysqli_query($this->db,'COMMIT');
-            return $res;
-        }else{
-            error('db instance not found!');
-            die();
-        }
-    }
-
-    public function rollback(){
-        if($this->db){
-            $res = mysqli_query($this->db,'ROLLBACK');
-            return $res;
-        }else{
-            error('db instance not found!');
-            die();
-        }
-    }
-
     public function error(){
         if($this->db){
             $res = mysqli_error($this->db);

@@ -49,6 +49,15 @@ class redis
         }
     }
 
+    public function setex($key, $value, $exTime = 0)
+    {
+        if ($this->redis) {
+            return $this->redis->setex($key, $exTime, $value);
+        } else {
+            error('没有redis连接');
+        }
+    }
+
     public function get($key)
     {
         if ($this->redis) {
